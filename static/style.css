@@ -1,0 +1,30 @@
+.main-table {
+    margin: auto;
+    background: aquamarine;
+    width: 70%;
+    height: 300px;
+}
+
+
+.main-cell {
+    background: whitesmoke;
+    width: 30px;
+    height: 100px;
+    border: 2px solid black;
+}
+
+.main-layout {
+  text-align: center;
+  min-height: 100px;
+  position: relative;
+}
+
+.main-layout img {
+  display: inline-block;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+}

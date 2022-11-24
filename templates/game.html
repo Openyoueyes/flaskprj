@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="alert alert-primary m-0" role="alert">
+    Вчерашний поход к барону явно удался. Сейчас Вы в пыльной непонятной комнате и Ваше самочувствие после бурной ночи
+    оставляет желать лучшего. Глоток свежего воздуха - вот лучшее решение. Пора отправляться к барону.
+</div>
+{% for msg in get_flashed_messages() %}
+{% if msg == "Ты не можешь двигаться дальше!" %}
+<div class="alert alert-danger" role="alert">
+    {{ msg }}
+</div>
+{% elif msg == "Ты успешно добрался до балкона поздравляю!Нажми на главную, чтобы перезагрузить игру!" %}
+<div class="alert alert-dark" role="alert">
+    {{ msg }}
+</div>
+{% else %}
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+    {{ msg }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Закрыть"></button>
+</div>
+{% endif %}
+{% endfor %}
+<div class="container-fluid" style="background: gray; height: 320px">
+    <div class="row">
+        <div class="col-sm-12 col-md-12 col-lg-5 col-xl-5">
+            <div style="padding-top: 65px; padding-left: 85px; text-align: center;">
+                <form action="" method="POST">
+                    {{ form.csrf_token }}
+                    <b style="line-height: 1">{{ form.way.label() }}</b>
+                    <p style="width: 35%;margin: auto; ">{{ form.way }}</p>
+                    {% for error in form.way.errors %}
+                    {{ error }}
+                    {% endfor %}
+
+                    {{ steps.csrf_token }}
+                    <b style="line-height: 2">{{ steps.steps.label() }}</b>
+                    <p style="width: 35%;margin: auto">{{ steps.steps }}</p>
+                    {% for error in steps.steps.errors %}
+                    {{ error }}
+                    {% endfor %}
+                    <p style="padding-top: 10px;"> {{ steps.submit}}</p>
+                    {% for error in steps.submit.errors %}
+                    {{ error }}
+                    {% endfor %}
+                </form>
+            </div>
+        </div>
+        <div class="col-7">
+            <table class="main-table" style="margin-top: 10px">
+                {% for i in range(3) %}
+                <tr class="main-tr">
+                    {%for j in range(3) %}
+                    {% if i == 0 and j == 0 %}
+                    <td class="main-cell"><img src="../static/img/wall.png" alt="wall"
+                                               style="width: 100%; height: 100%"></td>
+                    {% elif i == 0 and j == 2 %}
+                    <td class="main-cell">
+                        <img src="../static/img/wall.png" alt="wall"
+                             style="width: 100%; height: 100%"></td>
+                    {% elif (i == 0 and j == 1) and (i == game.current[0] and j == game.current[1]) %}
+                    <td class="main-cell">
+                        <div class="main-layout"><img id="layout-1" src="../static/img/balkon.png" alt="wall"
+                                                      style="width: 100%; height: 100%;">
+                            <img src="../static/img/player.png"
+                                 alt="player"
+                                 style="margin: auto;">
+                        </div>
+
+                    </td>
+                    {% elif i == 0 and j == 1 %}
+                    <td class="main-cell">
+                        <img src="../static/img/balkon.png" alt="wall"
+                             style="width: 100%; height: 100%; z-index: 1"></td>
+                    {% elif i == game.current[0] and j == game.current[1] %}
+                    <td class="main-cell">
+                        <div style="width: auto;text-align: center; margin: -40px"><img src="../static/img/player.png"
+                                                                                        alt="player"
+                                                                                        style="margin: auto;"></div>
+                    </td>
+                    {% else %}
+                    <td class="main-cell"></td>
+                    {% endif %}
+
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
